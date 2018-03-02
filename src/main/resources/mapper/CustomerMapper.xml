@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzjt.customer.mapper.CustomerMapper">
+<!-- 启用缓存 
+  <cache type="com.visionet.core.redis.LoggingRedisCache" />-->
+	<!--实体映射-->
+	<resultMap id="CustomerResultMap" type="com.dzjt.customer.entity.Customer">
+		<!--手机号码-->
+		<id property="phone" column="phone" />
+		<!--密码-->
+		<result property="password" column="password" />
+		<!--头像信息-->
+		<result property="headPic" column="head_pic" />
+		<!--名称-->
+		<result property="name" column="name" />
+		<!--称呼-->
+		<result property="nickName" column="nick_name" />
+		<!--城市-->
+		<result property="city" column="city" />
+		<!--等级-->
+		<result property="level" column="level" />
+		<!--评价等级-->
+		<result property="grade" column="grade" />
+		<!--总额-->
+		<result property="total" column="total" />
+		<!--可用余额-->
+		<result property="balance" column="balance" />
+		<!--总积分-->
+		<result property="pointsSum" column="points_sum" />
+		<!--可用积分-->
+		<result property="pointsAvailable" column="points_available" />
+		<!--订单总数-->
+		<result property="orderCount" column="order_count" />
+		<!--放空次数-->
+		<result property="failedOrderCount" column="failed_order_count" />
+		<!--注册时间-->
+		<result property="createDate" column="create_date" />
+		<!--上次活动时间-->
+		<result property="lastLoginDate" column="last_login_date" />
+		<!--状态0无效，1正常，2锁定，3拉黑-->
+		<result property="status" column="status" />
+		<!--是否认证（0非认证，1认证完成，2认证失败）-->
+		<result property="isValid" column="is_valid" />
+		<!--更新时间-->
+		<result property="updateDate" column="update_date" />
+		<!--更新人-->
+		<result property="updateBy" column="update_by" />
+		<!--0逻辑删除，1有效-->
+		<result property="delFlag" column="del_flag" />
+		<!--备用字段1-->
+		<result property="bakstr1" column="bakstr1" />
+		<!--备用字段2-->
+		<result property="bakstr2" column="bakstr2" />
+		<!--备用字段3-->
+		<result property="bakstr3" column="bakstr3" />
+		<!--备用字段4-->
+		<result property="bakstr4" column="bakstr4" />
+		<!--备用字段5-->
+		<result property="bakstr5" column="bakstr5" />
+		<!--1已在微信端绑定，0未在微信端绑定-->
+		<result property="isWechat" column="is_wechat" />
+		<!--1已在app端注册，0未在app端注册-->
+		<result property="isApp" column="is_app" />
+		<!--1已在96811使用，0未在96811使用-->
+		<result property="isCallcenter" column="is_callcenter" />
+		<!--微信openid-->
+		<result property="openid" column="openid" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 phone,	password,	head_pic,	name,	nick_name,	city,	level,	grade,	total,	balance,	points_sum,	points_available,	order_count,	failed_order_count,	create_date,	last_login_date,	status,	is_valid,	update_date,	update_by,	del_flag,	bakstr1,	bakstr2,	bakstr3,	bakstr4,	bakstr5,	is_wechat,	is_app,	is_callcenter,	openid
+	</sql>
+
+	<select id="getCustomerListYesterday" resultMap="CustomerResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_customer
+		WHERE 1=1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(create_date,'%Y-%m-%d') =  #{createDate}   ]]>
+		</if>
+	</select>
+	<select id="getCustomerListHistory" resultMap="CustomerResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_customer
+		WHERE 1=1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(create_date,'%Y-%m-%d') <=  #{createDate}   ]]>
+		</if>
+		limit #{from},#{to}
+	</select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="CustomerResultMap" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_customer
+		 WHERE phone = #{phone}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM t_customer
+		 WHERE phone = #{phone}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.dzjt.customer.entity.Customer">
+		 INSERT INTO t_customer
+ 		(phone,password,head_pic,name,nick_name,city,level,grade,total,balance,points_sum,points_available,order_count,failed_order_count,create_date,last_login_date,status,is_valid,update_date,update_by,del_flag,bakstr1,bakstr2,bakstr3,bakstr4,bakstr5,is_wechat,is_app,is_callcenter,openid) 
+		 VALUES 
+ 		(#{phone},#{password},#{headPic},#{name},#{nickName},#{city},#{level},#{grade},#{total},#{balance},#{pointsSum},#{pointsAvailable},#{orderCount},#{failedOrderCount},#{createDate},#{lastLoginDate},#{status},#{isValid},#{updateDate},#{updateBy},#{delFlag},#{bakstr1},#{bakstr2},#{bakstr3},#{bakstr4},#{bakstr5},#{isWechat},#{isApp},#{isCallcenter},#{openid}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.dzjt.customer.entity.Customer">
+		 INSERT INTO t_customer
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="phone != null">
+				 phone,
+			</if>
+			<if test="password != null">
+				 password,
+			</if>
+			<if test="headPic != null">
+				 head_pic,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="nickName != null">
+				 nick_name,
+			</if>
+			<if test="city != null">
+				 city,
+			</if>
+			<if test="level != null">
+				 level,
+			</if>
+			<if test="grade != null">
+				 grade,
+			</if>
+			<if test="total != null">
+				 total,
+			</if>
+			<if test="balance != null">
+				 balance,
+			</if>
+			<if test="pointsSum != null">
+				 points_sum,
+			</if>
+			<if test="pointsAvailable != null">
+				 points_available,
+			</if>
+			<if test="orderCount != null">
+				 order_count,
+			</if>
+			<if test="failedOrderCount != null">
+				 failed_order_count,
+			</if>
+			<if test="createDate != null">
+				 create_date,
+			</if>
+			<if test="lastLoginDate != null">
+				 last_login_date,
+			</if>
+			<if test="status != null">
+				 status,
+			</if>
+			<if test="isValid != null">
+				 is_valid,
+			</if>
+			<if test="updateDate != null">
+				 update_date,
+			</if>
+			<if test="updateBy != null">
+				 update_by,
+			</if>
+			<if test="delFlag != null">
+				 del_flag,
+			</if>
+			<if test="bakstr1 != null">
+				 bakstr1,
+			</if>
+			<if test="bakstr2 != null">
+				 bakstr2,
+			</if>
+			<if test="bakstr3 != null">
+				 bakstr3,
+			</if>
+			<if test="bakstr4 != null">
+				 bakstr4,
+			</if>
+			<if test="bakstr5 != null">
+				 bakstr5,
+			</if>
+			<if test="isWechat != null">
+				 is_wechat,
+			</if>
+			<if test="isApp != null">
+				 is_app,
+			</if>
+			<if test="isCallcenter != null">
+				 is_callcenter,
+			</if>
+			<if test="openid != null">
+				 openid,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="phone!=null">
+				 #{phone},
+			</if>
+			<if test="password!=null">
+				 #{password},
+			</if>
+			<if test="headPic!=null">
+				 #{headPic},
+			</if>
+			<if test="name!=null">
+				 #{name},
+			</if>
+			<if test="nickName!=null">
+				 #{nickName},
+			</if>
+			<if test="city!=null">
+				 #{city},
+			</if>
+			<if test="level!=null">
+				 #{level},
+			</if>
+			<if test="grade!=null">
+				 #{grade},
+			</if>
+			<if test="total!=null">
+				 #{total},
+			</if>
+			<if test="balance!=null">
+				 #{balance},
+			</if>
+			<if test="pointsSum!=null">
+				 #{pointsSum},
+			</if>
+			<if test="pointsAvailable!=null">
+				 #{pointsAvailable},
+			</if>
+			<if test="orderCount!=null">
+				 #{orderCount},
+			</if>
+			<if test="failedOrderCount!=null">
+				 #{failedOrderCount},
+			</if>
+			<if test="createDate!=null">
+				 #{createDate},
+			</if>
+			<if test="lastLoginDate!=null">
+				 #{lastLoginDate},
+			</if>
+			<if test="status!=null">
+				 #{status},
+			</if>
+			<if test="isValid!=null">
+				 #{isValid},
+			</if>
+			<if test="updateDate!=null">
+				 #{updateDate},
+			</if>
+			<if test="updateBy!=null">
+				 #{updateBy},
+			</if>
+			<if test="delFlag!=null">
+				 #{delFlag},
+			</if>
+			<if test="bakstr1!=null">
+				 #{bakstr1},
+			</if>
+			<if test="bakstr2!=null">
+				 #{bakstr2},
+			</if>
+			<if test="bakstr3!=null">
+				 #{bakstr3},
+			</if>
+			<if test="bakstr4!=null">
+				 #{bakstr4},
+			</if>
+			<if test="bakstr5!=null">
+				 #{bakstr5},
+			</if>
+			<if test="isWechat!=null">
+				 #{isWechat},
+			</if>
+			<if test="isApp!=null">
+				 #{isApp},
+			</if>
+			<if test="isCallcenter!=null">
+				 #{isCallcenter},
+			</if>
+			<if test="openid!=null">
+				 #{openid},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.dzjt.customer.entity.Customer">
+		 UPDATE t_customer
+ 		 <set> 
+			<if test="password != null">
+				 password = #{password},
+			</if>
+			<if test="headPic != null">
+				 head_pic = #{headPic},
+			</if>
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="nickName != null">
+				 nick_name = #{nickName},
+			</if>
+			<if test="city != null">
+				 city = #{city},
+			</if>
+			<if test="level != null">
+				 level = #{level},
+			</if>
+			<if test="grade != null">
+				 grade = #{grade},
+			</if>
+			<if test="total != null">
+				 total = #{total},
+			</if>
+			<if test="balance != null">
+				 balance = #{balance},
+			</if>
+			<if test="pointsSum != null">
+				 points_sum = #{pointsSum},
+			</if>
+			<if test="pointsAvailable != null">
+				 points_available = #{pointsAvailable},
+			</if>
+			<if test="orderCount != null">
+				 order_count = #{orderCount},
+			</if>
+			<if test="failedOrderCount != null">
+				 failed_order_count = #{failedOrderCount},
+			</if>
+			<if test="createDate != null">
+				 create_date = #{createDate},
+			</if>
+			<if test="lastLoginDate != null">
+				 last_login_date = #{lastLoginDate},
+			</if>
+			<if test="status != null">
+				 status = #{status},
+			</if>
+			<if test="isValid != null">
+				 is_valid = #{isValid},
+			</if>
+			<if test="updateDate != null">
+				 update_date = #{updateDate},
+			</if>
+			<if test="updateBy != null">
+				 update_by = #{updateBy},
+			</if>
+			<if test="delFlag != null">
+				 del_flag = #{delFlag},
+			</if>
+			<if test="bakstr1 != null">
+				 bakstr1 = #{bakstr1},
+			</if>
+			<if test="bakstr2 != null">
+				 bakstr2 = #{bakstr2},
+			</if>
+			<if test="bakstr3 != null">
+				 bakstr3 = #{bakstr3},
+			</if>
+			<if test="bakstr4 != null">
+				 bakstr4 = #{bakstr4},
+			</if>
+			<if test="bakstr5 != null">
+				 bakstr5 = #{bakstr5},
+			</if>
+			<if test="isWechat != null">
+				 is_wechat = #{isWechat},
+			</if>
+			<if test="isApp != null">
+				 is_app = #{isApp},
+			</if>
+			<if test="isCallcenter != null">
+				 is_callcenter = #{isCallcenter},
+			</if>
+			<if test="openid != null">
+				 openid = #{openid},
+			</if>
+
+ 		 </set>
+		 WHERE phone = #{phone}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.dzjt.customer.entity.Customer">
+		 UPDATE t_customer
+		 SET 
+			 password = #{password},
+			 head_pic = #{headPic},
+			 name = #{name},
+			 nick_name = #{nickName},
+			 city = #{city},
+			 level = #{level},
+			 grade = #{grade},
+			 total = #{total},
+			 balance = #{balance},
+			 points_sum = #{pointsSum},
+			 points_available = #{pointsAvailable},
+			 order_count = #{orderCount},
+			 failed_order_count = #{failedOrderCount},
+			 create_date = #{createDate},
+			 last_login_date = #{lastLoginDate},
+			 status = #{status},
+			 is_valid = #{isValid},
+			 update_date = #{updateDate},
+			 update_by = #{updateBy},
+			 del_flag = #{delFlag},
+			 bakstr1 = #{bakstr1},
+			 bakstr2 = #{bakstr2},
+			 bakstr3 = #{bakstr3},
+			 bakstr4 = #{bakstr4},
+			 bakstr5 = #{bakstr5},
+			 is_wechat = #{isWechat},
+			 is_app = #{isApp},
+			 is_callcenter = #{isCallcenter},
+			 openid = #{openid}
+		 WHERE phone = #{phone}
+	</update>
+
+</mapper>

@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzjt.order.mapper.OrderMapper">
+<!-- 启用缓存
+  <cache type="com.visionet.core.redis.LoggingRedisCache" /> -->
+	<!--实体映射 -->
+	<resultMap id="OrderResultMap" type="com.dzjt.order.entity.Order">
+	     
+		<!--订单号 -->
+		<id property="orderId" column="order_id" />
+		<!--订单类型(0：app叫车，1：callcenter) -->
+		<result property="orderType" column="order_type" />
+		<!--车型 -->
+		<result property="carType" column="car_type" />
+
+		<!--数量（默认1）-->
+		<result property="carNumber" column="car_number" javaType="Integer"/> 
+		<!--起点 -->
+		<result property="startPlace" column="start_place" />
+		<!--起点gps信息 -->
+		<result property="startGps" column="start_gps" />
+		<!--终点（存储json） -->
+		<result property="endPlace" column="end_place" />
+		<!--终点gps信息（存储json） -->
+		<result property="endGps" column="end_gps" />
+		<!--预计公里数 km 小数后两位 -->
+		<result property="expectedKm" column="expected_km" />
+		<!--实际公里数 km 小数后两位 -->
+		<result property="actualKm" column="actual_km" />
+		<!--订单总价格 -->
+		<result property="totalPrice" column="total_price" />
+		<!--预计车费价格 小数后两位 -->
+		<result property="expectedPrice" column="expected_price" />
+		<!--实际车费价格 小数后两位 -->
+		<result property="actualPrice" column="actual_price" />
+		<!--其他费用1 -->
+		<result property="otherPrice" column="other_price" />
+		<!--费用名称1 -->
+		<result property="otherPriceDescription" column="other_price_description" />
+		<!--其他费用2 -->
+		<result property="otherPrice2" column="other_price2" />
+		<!--费用名称2 -->
+		<result property="otherPriceDescription2" column="other_price_description2" />
+		<!--其他费用3 -->
+		<result property="otherPrice3" column="other_price3" />
+		<!--费用名称3 -->
+		<result property="otherPriceDescription3" column="other_price_description3" />
+		<!--其他费用4 -->
+		<result property="otherPrice4" column="other_price4" />
+		<!--费用名称4 -->
+		<result property="otherPriceDescription4" column="other_price_description4" />
+		<!--货主手机号 -->
+		<result property="customerPhone" column="customer_phone" />
+		<!--货主名称 -->
+		<result property="customerName" column="customer_name" />
+		<!--手机号码 -->
+		<result property="carUserId" column="car_user_id" />
+		<!--手机号码 -->
+		<result property="carUserPhone" column="car_user_phone" />
+		<!--车主名称 -->
+		<result property="carUserName" column="car_user_name" />
+		<!--叫车时间 -->
+		<result property="callDate" column="call_date" />
+		<!--预约时间 -->
+		<result property="bookDate" column="book_date" />
+		<!--运输开始时间 -->
+		<result property="tranportStartDate" column="tranport_start_date" />
+		<!--运输结束时间 -->
+		<result property="tranportEndDate" column="tranport_end_date" />
+		<!--订单完成时间 -->
+		<result property="finishDate" column="finish_date" />
+		<!--货主获评 -->
+		<result property="customerGrade" column="customer_grade" />
+		<!--车主获评 -->
+		<result property="carUserGrade" column="car_user_grade" />
+		<!--众币奖励或消耗(+100/-100) -->
+		<result property="virtual" column="virtual" />
+		<!--结算类型(0,大众内部，1加盟的，2其他) -->
+		<result property="settlementType" column="settlement_type" />
+		<!--回拨电话 -->
+		<result property="callbackPhone" column="callback_phone" />
+		<!--后台接线员id -->
+		<result property="creater" column="creater" />
+		<!--状态0创建，1已接单，2已完成，3取消，4放空 -->
+		<result property="status" column="status" />
+		<!--更新时间 -->
+		<result property="updateDate" column="update_date" />
+		<!--更新人 -->
+		<result property="updateBy" column="update_by" />
+		<!--0逻辑删除，1有效 -->
+		<result property="delFlag" column="del_flag" />
+		<!--备用字段1 -->
+		<result property="bakstr1" column="bakstr1" />
+		<!--备用字段2 -->
+		<result property="bakstr2" column="bakstr2" />
+		<!--备用字段3 -->
+		<result property="bakstr3" column="bakstr3" />
+		<!--备用字段4 -->
+		<result property="bakstr4" column="bakstr4" />
+		<!--备用字段5 -->
+		<result property="bakstr5" column="bakstr5" />
+		<!--头像信息 -->
+		<result property="headPic" column="head_pic" />
+		<!--姓名 -->
+		<result property="name" column="name" />
+		<!--称呼 -->
+		<result property="nickName" column="nick_name" />
+		<!--支付类型 -->
+		<result property="type" column="type" />
+		<!--支付金额 -->
+		<result property="money" column="money" />
+		<!--车牌号 -->
+		<result property="carNumbers" column="car_number" />
+		<!-- 发票状态 -->
+		<result property="isInvoice" column="is_invoice"/>
+		<!-- 来源 -->
+		<result property="orderSource" column="order_source"/>
+		<!-- 低速行使时间-->
+		<result property="lowSpeedTimes" column="low_speed_times"/>
+		
+	</resultMap>
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		order_id, order_type, car_type, car_number, start_place,
+		start_gps, end_place,
+		end_gps, expected_km, actual_km, total_price,
+		expected_price,
+		actual_price, other_price, other_price_description,
+		other_price2,
+		other_price_description2, other_price3,
+		other_price_description3,
+		other_price4, other_price_description4,
+		customer_phone, customer_name,
+		car_user_phone, car_user_name,
+		call_date, book_date,
+		tranport_start_date, tranport_end_date,
+		finish_date, customer_grade,
+		car_user_grade, virtual, settlement_type,
+		callback_phone, creater,
+		status, update_date, update_by, del_flag,
+		bakstr1, bakstr2, bakstr3,
+		bakstr4, bakstr5,is_invoice,order_source,low_speed_times,car_user_id
+	</sql>
+
+	<select id="getOrderListHistory" resultMap="OrderResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_order
+		WHERE 1=1 AND del_flag = 1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(call_date,'%Y-%m-%d') <=  #{createDate}   ]]>
+		</if>
+		limit #{from},#{to}
+	</select>
+	<select id="getOrderListYesterday" resultMap="OrderResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_order
+		WHERE 1=1 and del_flag = 1
+		<if test="callDate != null">
+			<![CDATA[	AND DATE_FORMAT(call_date,'%Y-%m-%d') =  #{callDate}   ]]>
+		</if>
+	</select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="OrderResultMap"
+		parameterType="java.lang.String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_order
+		WHERE order_id = #{orderId}
+	</select>
+		<!-- 查询（根据主键ID查询） -->
+	<select id="selectOrderAddInvoice" resultMap="OrderResultMap"
+		parameterType="java.lang.String">
+		SELECT
+		order_id,is_invoice
+		FROM t_order
+		WHERE order_id = #{orderId}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.dzjt.order.entity.Order">
+		INSERT INTO t_order
+		(order_id,order_type,car_type,car_number,start_place,start_gps,end_place,end_gps,expected_km,actual_km,total_price,expected_price,actual_price,other_price,other_price_description,other_price2,other_price_description2,other_price3,other_price_description3,other_price4,other_price_description4,customer_phone,customer_name,car_user_phone,car_user_name,call_date,book_date,tranport_start_date,tranport_end_date,finish_date,customer_grade,car_user_grade,virtual,settlement_type,callback_phone,creater,status,update_date,update_by,del_flag,bakstr1,bakstr2,bakstr3,bakstr4,bakstr5,order_source,low_speed_times,car_user_id)
+		VALUES
+		(#{orderId},#{orderType},#{carType},#{carNumber},#{startPlace},#{startGps},#{endPlace},#{endGps},#{expectedKm},#{actualKm},#{totalPrice},#{expectedPrice},#{actualPrice},#{otherPrice},#{otherPriceDescription},#{otherPrice2},#{otherPriceDescription2},#{otherPrice3},#{otherPriceDescription3},#{otherPrice4},#{otherPriceDescription4},#{customerPhone},#{customerName},#{carUserPhone},#{carUserName},#{callDate},#{bookDate},#{tranportStartDate},#{tranportEndDate},#{finishDate},#{customerGrade},#{carUserGrade},#{virtual},#{settlementType},#{callbackPhone},#{creater},#{status},#{updateDate},#{updateBy},#{delFlag},#{bakstr1},#{bakstr2},#{bakstr3},#{bakstr4},#{bakstr5},#{orderSource},#{lowSpeedTimes},#{carUserId})
+	</insert>
+
+	<!-- 添加 （匹配有值的字段） -->
+	<insert id="insertSelective" parameterType="com.dzjt.order.entity.Order">
+		INSERT INTO t_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="carType != null">
+				car_type,
+			</if>
+			<if test="carNumber != null">
+				car_number,
+			</if>
+			<if test="startPlace != null">
+				start_place,
+			</if>
+			<if test="startGps != null">
+				start_gps,
+			</if>
+			<if test="endPlace != null">
+				end_place,
+			</if>
+			<if test="endGps != null">
+				end_gps,
+			</if>
+			<if test="expectedKm != null">
+				expected_km,
+			</if>
+			<if test="actualKm != null">
+				actual_km,
+			</if>
+			<if test="totalPrice != null">
+				total_price,
+			</if>
+			<if test="expectedPrice != null">
+				expected_price,
+			</if>
+			<if test="actualPrice != null">
+				actual_price,
+			</if>
+			<if test="otherPrice != null">
+				other_price,
+			</if>
+			<if test="otherPriceDescription != null">
+				other_price_description,
+			</if>
+			<if test="otherPrice2 != null">
+				other_price2,
+			</if>
+			<if test="otherPriceDescription2 != null">
+				other_price_description2,
+			</if>
+			<if test="otherPrice3 != null">
+				other_price3,
+			</if>
+			<if test="otherPriceDescription3 != null">
+				other_price_description3,
+			</if>
+			<if test="otherPrice4 != null">
+				other_price4,
+			</if>
+			<if test="otherPriceDescription4 != null">
+				other_price_description4,
+			</if>
+			<if test="customerPhone != null">
+				customer_phone,
+			</if>
+			<if test="customerName != null">
+				customer_name,
+			</if>
+			<if test="carUserPhone != null">
+				car_user_phone,
+			</if>
+			<if test="carUserName != null">
+				car_user_name,
+			</if>
+			<if test="callDate != null">
+				call_date,
+			</if>
+			<if test="bookDate != null">
+				book_date,
+			</if>
+			<if test="tranportStartDate != null">
+				tranport_start_date,
+			</if>
+			<if test="tranportEndDate != null">
+				tranport_end_date,
+			</if>
+			<if test="finishDate != null">
+				finish_date,
+			</if>
+			<if test="customerGrade != null">
+				customer_grade,
+			</if>
+			<if test="carUserGrade != null">
+				car_user_grade,
+			</if>
+			<if test="virtual != null">
+				virtual,
+			</if>
+			<if test="settlementType != null">
+				settlement_type,
+			</if>
+			<if test="callbackPhone != null">
+				callback_phone,
+			</if>
+			<if test="creater != null">
+				creater,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="bakstr1 != null">
+				bakstr1,
+			</if>
+			<if test="bakstr2 != null">
+				bakstr2,
+			</if>
+			<if test="bakstr3 != null">
+				bakstr3,
+			</if>
+			<if test="bakstr4 != null">
+				bakstr4,
+			</if>
+			<if test="bakstr5 != null">
+				bakstr5,
+			</if>
+			<if test="orderSource != null">
+				order_source,
+			</if>
+			<if test="lowSpeedTimes != null">
+				low_speed_times,
+			</if>
+			<if test="carUserId != null">
+				car_user_id
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId!=null">
+				#{orderId},
+			</if>
+			<if test="orderType!=null">
+				#{orderType},
+			</if>
+			<if test="carType!=null">
+				#{carType},
+			</if>
+			<if test="carNumber!=null">
+				#{carNumber},
+			</if>
+			<if test="startPlace!=null">
+				#{startPlace},
+			</if>
+			<if test="startGps!=null">
+				#{startGps},
+			</if>
+			<if test="endPlace!=null">
+				#{endPlace},
+			</if>
+			<if test="endGps!=null">
+				#{endGps},
+			</if>
+			<if test="expectedKm!=null">
+				#{expectedKm},
+			</if>
+			<if test="actualKm!=null">
+				#{actualKm},
+			</if>
+			<if test="totalPrice!=null">
+				#{totalPrice},
+			</if>
+			<if test="expectedPrice!=null">
+				#{expectedPrice},
+			</if>
+			<if test="actualPrice!=null">
+				#{actualPrice},
+			</if>
+			<if test="otherPrice!=null">
+				#{otherPrice},
+			</if>
+			<if test="otherPriceDescription!=null">
+				#{otherPriceDescription},
+			</if>
+			<if test="otherPrice2!=null">
+				#{otherPrice2},
+			</if>
+			<if test="otherPriceDescription2!=null">
+				#{otherPriceDescription2},
+			</if>
+			<if test="otherPrice3!=null">
+				#{otherPrice3},
+			</if>
+			<if test="otherPriceDescription3!=null">
+				#{otherPriceDescription3},
+			</if>
+			<if test="otherPrice4!=null">
+				#{otherPrice4},
+			</if>
+			<if test="otherPriceDescription4!=null">
+				#{otherPriceDescription4},
+			</if>
+			<if test="customerPhone!=null">
+				#{customerPhone},
+			</if>
+			<if test="customerName!=null">
+				#{customerName},
+			</if>
+			<if test="carUserPhone!=null">
+				#{carUserPhone},
+			</if>
+			<if test="carUserName!=null">
+				#{carUserName},
+			</if>
+			<if test="callDate!=null">
+				#{callDate},
+			</if>
+			<if test="bookDate!=null">
+				#{bookDate},
+			</if>
+			<if test="tranportStartDate!=null">
+				#{tranportStartDate},
+			</if>
+			<if test="tranportEndDate!=null">
+				#{tranportEndDate},
+			</if>
+			<if test="finishDate!=null">
+				#{finishDate},
+			</if>
+			<if test="customerGrade!=null">
+				#{customerGrade},
+			</if>
+			<if test="carUserGrade!=null">
+				#{carUserGrade},
+			</if>
+			<if test="virtual!=null">
+				#{virtual},
+			</if>
+			<if test="settlementType!=null">
+				#{settlementType},
+			</if>
+			<if test="callbackPhone!=null">
+				#{callbackPhone},
+			</if>
+			<if test="creater!=null">
+				#{creater},
+			</if>
+			<if test="status!=null">
+				#{status},
+			</if>
+			<if test="updateDate!=null">
+				#{updateDate},
+			</if>
+			<if test="updateBy!=null">
+				#{updateBy},
+			</if>
+			<if test="delFlag!=null">
+				#{delFlag},
+			</if>
+			<if test="bakstr1!=null">
+				#{bakstr1},
+			</if>
+			<if test="bakstr2!=null">
+				#{bakstr2},
+			</if>
+			<if test="bakstr3!=null">
+				#{bakstr3},
+			</if>
+			<if test="bakstr4!=null">
+				#{bakstr4},
+			</if>
+			<if test="bakstr5!=null">
+				#{bakstr5},
+			</if>
+			<if test="orderSource != null">
+				#{orderSource},
+			</if>
+			<if test="lowSpeedTimes != null">
+					#{lowSpeedTimes},
+					
+			</if>
+			<if test="carUserId != null">
+				#{carUserId}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 修 改 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.dzjt.order.entity.Order">
+		UPDATE t_order
+		<set>
+			<if test="orderType != null">
+				order_type = #{orderType},
+			</if>
+			<if test="carType != null">
+				car_type = #{carType},
+			</if>
+			<if test="carNumber != null">
+				car_number = #{carNumber},
+			</if>
+			<if test="startPlace != null">
+				start_place = #{startPlace},
+			</if>
+			<if test="startGps != null">
+				start_gps = #{startGps},
+			</if>
+			<if test="endPlace != null">
+				end_place = #{endPlace},
+			</if>
+			<if test="endGps != null">
+				end_gps = #{endGps},
+			</if>
+			<if test="expectedKm != null">
+				expected_km = #{expectedKm},
+			</if>
+			<if test="actualKm != null">
+				actual_km = #{actualKm},
+			</if>
+			<if test="totalPrice != null">
+				total_price = #{totalPrice},
+			</if>
+			<if test="expectedPrice != null">
+				expected_price = #{expectedPrice},
+			</if>
+			<if test="actualPrice != null">
+				actual_price = #{actualPrice},
+			</if>
+			<if test="otherPrice != null">
+				other_price = #{otherPrice},
+			</if>
+			<if test="otherPriceDescription != null">
+				other_price_description = #{otherPriceDescription},
+			</if>
+			<if test="otherPrice2 != null">
+				other_price2 = #{otherPrice2},
+			</if>
+			<if test="otherPriceDescription2 != null">
+				other_price_description2 = #{otherPriceDescription2},
+			</if>
+			<if test="otherPrice3 != null">
+				other_price3 = #{otherPrice3},
+			</if>
+			<if test="otherPriceDescription3 != null">
+				other_price_description3 = #{otherPriceDescription3},
+			</if>
+			<if test="otherPrice4 != null">
+				other_price4 = #{otherPrice4},
+			</if>
+			<if test="otherPriceDescription4 != null">
+				other_price_description4 = #{otherPriceDescription4},
+			</if>
+			<if test="customerPhone != null">
+				customer_phone = #{customerPhone},
+			</if>
+			<if test="customerName != null">
+				customer_name = #{customerName},
+			</if>
+			<if test="carUserPhone != null">
+				car_user_phone = #{carUserPhone},
+			</if>
+			<if test="carUserName != null">
+				car_user_name = #{carUserName},
+			</if>
+			<if test="callDate != null">
+				call_date = #{callDate},
+			</if>
+			<if test="bookDate != null">
+				book_date = #{bookDate},
+			</if>
+			<if test="tranportStartDate != null">
+				tranport_start_date = #{tranportStartDate},
+			</if>
+			<if test="tranportEndDate != null">
+				tranport_end_date = #{tranportEndDate},
+			</if>
+			<if test="finishDate != null">
+				finish_date = #{finishDate},
+			</if>
+			<if test="customerGrade != null">
+				customer_grade = #{customerGrade},
+			</if>
+			<if test="carUserGrade != null">
+				car_user_grade = #{carUserGrade},
+			</if>
+			<if test="virtual != null">
+				virtual = #{virtual},
+			</if>
+			<if test="settlementType != null">
+				settlement_type = #{settlementType},
+			</if>
+			<if test="callbackPhone != null">
+				callback_phone = #{callbackPhone},
+			</if>
+			<if test="creater != null">
+				creater = #{creater},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+			<if test="bakstr1 != null">
+				bakstr1 = #{bakstr1},
+			</if>
+			<if test="bakstr2 != null">
+				bakstr2 = #{bakstr2},
+			</if>
+			<if test="bakstr3 != null">
+				bakstr3 = #{bakstr3},
+			</if>
+			<if test="bakstr4 != null">
+				bakstr4 = #{bakstr4},
+			</if>
+			<if test="bakstr5 != null">
+				bakstr5 = #{bakstr5},
+			</if>
+			<if test="isInvoice != null">
+				is_invoice = #{isInvoice},
+			</if>
+			<if test="orderSource != null">
+				order_source = #{orderSource},
+			</if>
+			<if test="orderSource != null">
+				low_speed_times = #{lowSpeedTimes},
+			</if>
+			<if test="carUserId != null">
+				car_user_id = #{carUserId}
+			</if>
+	</set>
+		WHERE order_id = #{orderId}
+	</update>
+
+	<!-- 修 改 -->
+	<update id="updateByPrimaryKey" parameterType="com.dzjt.order.entity.Order">
+		UPDATE t_order
+		SET
+		order_type = #{orderType},
+		car_type = #{carType},
+		car_user_id = #{carUserId},
+		car_number =
+		#{carNumber},
+		start_place = #{startPlace},
+		start_gps = #{startGps},
+		end_place = #{endPlace},
+		end_gps = #{endGps},
+		expected_km =
+		#{expectedKm},
+		actual_km = #{actualKm},
+		total_price = #{totalPrice},
+		expected_price = #{expectedPrice},
+		actual_price = #{actualPrice},
+		other_price = #{otherPrice},
+		other_price_description =
+		#{otherPriceDescription},
+		other_price2 = #{otherPrice2},
+		other_price_description2 = #{otherPriceDescription2},
+		other_price3 =
+		#{otherPrice3},
+		other_price_description3 = #{otherPriceDescription3},
+		other_price4 = #{otherPrice4},
+		other_price_description4 =
+		#{otherPriceDescription4},
+		customer_phone = #{customerPhone},
+		customer_name = #{customerName},
+		car_user_phone = #{carUserPhone},
+		car_user_name = #{carUserName},
+		call_date = #{callDate},
+		book_date =
+		#{bookDate},
+		tranport_start_date = #{tranportStartDate},
+		tranport_end_date = #{tranportEndDate},
+		finish_date = #{finishDate},
+		customer_grade = #{customerGrade},
+		car_user_grade = #{carUserGrade},
+		virtual = #{virtual},
+		settlement_type = #{settlementType},
+		callback_phone = #{callbackPhone},
+		creater = #{creater},
+		status =
+		#{status},
+		update_date = #{updateDate},
+		update_by = #{updateBy},
+		del_flag = #{delFlag},
+		bakstr1 = #{bakstr1},
+		bakstr2 = #{bakstr2},
+		bakstr3 = #{bakstr3},
+		bakstr4 = #{bakstr4},
+		bakstr5 = #{bakstr5},
+		order_source = #{orderSource},
+		low_speed_times = #{lowSpeedTimes}
+		WHERE
+		order_id = #{orderId}
+	</update>
+
+</mapper>

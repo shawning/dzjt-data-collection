@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzjt.carUser.mapper.CarInfoMapper">
+
+	<!--实体映射-->
+	<resultMap id="CarInfoResultMap" type="com.dzjt.carUser.entity.CarInfo">
+		<!--车辆ID-->
+		<id property="id" column="ID" />
+		<!--公司ID-->
+		<result property="companyId" column="COMPANY_ID" />
+		<!--公司名称-->
+		<result property="companyName" column="COMPANY_NAME" />
+		<!--车型ID-->
+		<result property="carTypeId" column="CAR_TYPE_ID" />
+		<!--车型-->
+		<result property="carType" column="CAR_TYPE" />
+		<!--车牌号-->
+		<result property="carNumer" column="CAR_NUMER" />
+		<!--0逻辑删除，1有效-->
+		<result property="delFlag" column="DEL_FLAG" />
+		<!--创建人-->
+		<result property="creater" column="CREATER" />
+		<!--创建时间-->
+		<result property="createTime" column="CREATE_TIME" />
+		<!--更新人-->
+		<result property="updater" column="UPDATER" />
+		<!--更新时间-->
+		<result property="updateTime" column="UPDATE_TIME" />
+		<!--备用字段1-->
+		<result property="bakstr1" column="BAKSTR1" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 ID,	COMPANY_ID,	COMPANY_NAME,	CAR_TYPE_ID,	CAR_TYPE,	CAR_NUMER,	DEL_FLAG,	CREATER,	CREATE_TIME,	UPDATER,	UPDATE_TIME,	BAKSTR1
+	</sql>
+
+	<select id="getCarInfoListHistory" resultMap="CarInfoResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM m_car_info
+		WHERE 1=1 and del_flag = 1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(create_Time,'%Y-%m-%d') <=  #{createDate}   ]]>
+		</if>
+		limit #{from},#{to}
+	</select>
+	<select id="getCarInfoListYesterday" resultMap="CarInfoResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM m_car_info where 1 =1 and del_flag = 1
+		<if test="createTime != null">
+			<![CDATA[	AND DATE_FORMAT(create_Time,'%Y-%m-%d') =  #{createTime}   ]]>
+		</if>
+	</select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="CarInfoResultMap" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM m_car_info
+		 WHERE ID = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 update  m_car_info set del_flag = 0 
+		 WHERE ID = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.dzjt.carUser.entity.CarInfo">
+		 INSERT INTO m_car_info
+ 		(ID,COMPANY_ID,COMPANY_NAME,CAR_TYPE_ID,CAR_TYPE,CAR_NUMER,DEL_FLAG,CREATER,CREATE_TIME,UPDATER,UPDATE_TIME,BAKSTR1) 
+		 VALUES 
+ 		(#{id},#{companyId},#{companyName},#{carTypeId},#{carType},#{carNumer},#{delFlag},#{creater},#{createTime},#{updater},#{updateTime},#{bakstr1}) 
+	</insert>
+	
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.dzjt.carUser.entity.CarInfo">
+		 INSERT INTO m_car_info
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 ID,
+			</if>
+			<if test="companyId != null">
+				 COMPANY_ID,
+			</if>
+			<if test="companyName != null">
+				 COMPANY_NAME,
+			</if>
+			<if test="carTypeId != null">
+				 CAR_TYPE_ID,
+			</if>
+			<if test="carType != null">
+				 CAR_TYPE,
+			</if>
+			<if test="carNumer != null">
+				 CAR_NUMER,
+			</if>
+			<if test="delFlag != null">
+				 DEL_FLAG,
+			</if>
+			<if test="creater != null">
+				 CREATER,
+			</if>
+			<if test="createTime != null">
+				 CREATE_TIME,
+			</if>
+			<if test="updater != null">
+				 UPDATER,
+			</if>
+			<if test="updateTime != null">
+				 UPDATE_TIME,
+			</if>
+			<if test="bakstr1 != null">
+				 BAKSTR1,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="companyId!=null">
+				 #{companyId},
+			</if>
+			<if test="companyName!=null">
+				 #{companyName},
+			</if>
+			<if test="carTypeId!=null">
+				 #{carTypeId},
+			</if>
+			<if test="carType!=null">
+				 #{carType},
+			</if>
+			<if test="carNumer!=null">
+				 #{carNumer},
+			</if>
+			<if test="delFlag!=null">
+				 #{delFlag},
+			</if>
+			<if test="creater!=null">
+				 #{creater},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updater!=null">
+				 #{updater},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+			<if test="bakstr1!=null">
+				 #{bakstr1},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.dzjt.carUser.entity.CarInfo">
+		 UPDATE m_car_info
+ 		 <set> 
+			<if test="companyId != null">
+				 COMPANY_ID = #{companyId},
+			</if>
+			<if test="companyName != null">
+				 COMPANY_NAME = #{companyName},
+			</if>
+			<if test="carTypeId != null">
+				 CAR_TYPE_ID = #{carTypeId},
+			</if>
+			<if test="carType != null">
+				 CAR_TYPE = #{carType},
+			</if>
+			<if test="carNumer != null">
+				 CAR_NUMER = #{carNumer},
+			</if>
+			<if test="delFlag != null">
+				 DEL_FLAG = #{delFlag},
+			</if>
+			<if test="creater != null">
+				 CREATER = #{creater},
+			</if>
+			<if test="createTime != null">
+				 CREATE_TIME = #{createTime},
+			</if>
+			<if test="updater != null">
+				 UPDATER = #{updater},
+			</if>
+			<if test="updateTime != null">
+				 UPDATE_TIME = #{updateTime},
+			</if>
+			<if test="bakstr1 != null">
+				 BAKSTR1 = #{bakstr1},
+			</if>
+
+ 		 </set>
+		 WHERE ID = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.dzjt.carUser.entity.CarInfo">
+		 UPDATE m_car_info
+		 SET 
+			 COMPANY_ID = #{companyId},
+			 COMPANY_NAME = #{companyName},
+			 CAR_TYPE_ID = #{carTypeId},
+			 CAR_TYPE = #{carType},
+			 CAR_NUMER = #{carNumer},
+			 DEL_FLAG = #{delFlag},
+			 CREATER = #{creater},
+			 CREATE_TIME = #{createTime},
+			 UPDATER = #{updater},
+			 UPDATE_TIME = #{updateTime},
+			 BAKSTR1 = #{bakstr1}
+		 WHERE ID = #{id}
+	</update>
+
+</mapper>

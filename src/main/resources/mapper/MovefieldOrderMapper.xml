@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzjt.order.mapper.MovefieldOrderMapper">	
+
+	<!--实体映射-->
+	<resultMap id="MovefieldOrderResultMap" type="com.dzjt.order.entity.MovefieldOrder">
+	    <id property="id" column="ORDER_ID" />
+	    <id property="_parentId" column="PARENT_ID" />
+	     <id property="state" column="PARENT_ID" />
+		<!--订单ID-->
+		<id property="orderId" column="ORDER_ID" />
+		
+		<!--订单来源(0 为业务员pad  1为callcenter)-->
+		<result property="orderSource" column="ORDER_SOURCE" />
+		<!--订单类型-->
+		<result property="orderType" column="ORDER_TYPE" />
+		<!--车辆类型(0 小车  1 大车)-->
+		<result property="carType" column="CAR_TYPE" />
+		
+		<!--车辆基价-->
+		<result property="carTypePrice" column="CAR_TYPE_PRICE" />
+		<!--用车数量-->
+		<result property="carNum" column="CAR_NUM" />
+		<!--接单公司ID-->
+		<result property="ordertakingId" column="ORDERTAKING_ID" />
+		<!--接单公司名称-->
+		<result property="ordertakingName" column="ORDERTAKING_NAME" />
+		<!--客户电话号码-->
+		<result property="customerPhone" column="CUSTOMER_PHONE" />
+		<!--客户联系人姓名-->
+		<result property="customerName" column="CUSTOMER_NAME" />
+		<!--客户单位(托运单位)-->
+		<result property="consignmentUnit" column="CONSIGNMENT_UNIT" />
+		<!--预约时间-->
+		<result property="bookDate" column="BOOK_DATE" />
+		<!--预估时间档占用-->
+		<result property="expectedTimeFile" column="EXPECTED_TIME_FILE" />
+		<!--时间档占用-->
+		<result property="timeFile" column="TIME_FILE" />
+		<!--独立人工费-->
+		<result property="independentManpowerPrice" column="INDEPENDENT_MANPOWER_PRICE" />
+		<!--独立人工数-->
+		<result property="independentManpowerNum" column="INDEPENDENT_MANPOWER_NUM" />
+		<!--独立人工时长-->
+		<result property="independentManpowerTime" column="INDEPENDENT_MANPOWER_TIME" />
+		<!--车次-->
+		<result property="transportTimes" column="TRANSPORT_TIMES" />
+		<!--订单数-->
+		<result property="orderTimes" column="ORDER_TIMES" />
+		<!--备注-->
+		<result property="descripetion" column="DESCRIPETION" />
+		<!--状态(0下单未创建 1草稿单未分配  2 下单已分配 3需人工分配 4取消 5待支付 6运输完成 7订单完成)-->
+		<result property="status" column="STATUS" />
+		<!--订单开始时间-->
+		<result property="orderStartDate" column="ORDER_START_DATE" />
+		<!--运输开始时间-->
+		<result property="tranportStartDate" column="TRANPORT_START_DATE" />
+		<!--运输结束时间-->
+		<result property="tranportEndDate" column="TRANPORT_END_DATE" />
+		<!--订单完成时间-->
+		<result property="finishDate" column="FINISH_DATE" />
+		<!--回拨电话-->
+		<result property="callbackPhone" column="CALLBACK_PHONE" />
+		<!--预计公里数-->
+		<result property="expectedKm" column="EXPECTED_KM" />
+		<!--起运距离费-->
+		<result property="startEndDistancePrice" column="START_END_DISTANCE_PRICE" />
+		<!--预期总金额-->
+		<result property="expectedTotalPrice" column="EXPECTED_TOTAL_PRICE" />
+		<!--回单总金额-->
+		<result property="receiptPrice" column="RECEIPT_PRICE" />
+		<!--回款总金额-->
+		<result property="backPrice" column="BACK_PRICE" />
+		<!--特需费-->
+		<result property="specialPrice" column="SPECIAL_PRICE" />
+		<!--辅料费-->
+		<result property="accessoriesPrice" column="ACCESSORIES_PRICE" />
+		<!--开票总金额-->
+		<result property="invoicePrice" column="INVOICE_PRICE" />
+		<!--拆装费总价-->
+		<result property="breakPackageSumPrice" column="BREAK_PACKAGE_SUM_PRICE" />
+		<!--拆装费调价-->
+		<result property="breakPackageTransferPrice" column="BREAK_PACKAGE_TRANSFER_PRICE" />
+		<!--搬运费总价-->
+		<result property="moveSumPrice" column="MOVE_SUM_PRICE" />
+		<!--搬运费调价-->
+		<result property="moveTransfeRprice" column="MOVE_TRANSFE_RPRICE" />
+		<!--打包费总价-->
+		<result property="packSumPrice" column="PACK_SUM_PRICE" />
+		<!--打包费调价-->
+		<result property="packTransfePrice" column="PACK_TRANSFE_PRICE" />
+		<!--节假日费用-->
+		<result property="holidaysPrice" column="HOLIDAYS_PRICE" />
+		<!--开票类型-->	
+		<result property="invoiceType" column="INVOICE_TYPE" />
+		<!--纳税人识别号-->
+		<result property="taxpayerIdentityNumber" column="TAXPAYER_IDENTITY_NUMBER" />
+		<!--开票公司-->
+		<result property="invoiceCompany" column="INVOICE_COMPANY" />
+		<!--地址电话-->
+		<result property="addressPhone" column="ADDRESS_PHONE" />
+		<!--寄票地址-->
+		<result property="invoiceAddress" column="INVOICE_ADDRESS" />
+		<!--开户行及账号-->
+		<result property="bankBanknumber" column="BANK_BANKNUMBER" />
+		<!--其它费用-->
+		<result property="otherPrice" column="OTHER_PRICE" />
+		<!--其它费用描述-->
+		<result property="otherPriceDescription" column="OTHER_PRICE_DESCRIPTION" />
+		<!--其它费用2-->
+		<result property="otherPrice2" column="OTHER_PRICE2" />
+		<!--其它费用描述2-->
+		<result property="otherPriceDescription2" column="OTHER_PRICE_DESCRIPTION2" />
+		<!--其它费用3-->
+		<result property="otherPrice3" column="OTHER_PRICE3" />
+		<!--其它费用描述3-->
+		<result property="otherPriceDescription3" column="OTHER_PRICE_DESCRIPTION3" />
+		<!--其它费用3-->
+		<result property="otherPrice4" column="OTHER_PRICE4" />
+		<!--其它费用描述3-->
+		<result property="otherPriceDescription4" column="OTHER_PRICE_DESCRIPTION4" />
+		<!--是否为本部订单(0 为本部 1不为)-->
+		<result property="isLocal" column="IS_LOCAL" />
+		<!--任务类型(0 为质检 1 为勘探)-->
+		<result property="taskType" column="TASK_TYPE" />
+		<!--0逻辑删除，1有效-->
+		<result property="delFlag" column="DEL_FLAG" />
+		<!--是否开票:0 未开票  ; 1 已开票-->
+		<result property="isInvoice" column="IS_INVOICE" />
+		<!--对象描述-->
+		<result property="objectdexcription" column="OBJECTDEXCRIPTION" />
+		<!--创建人-->
+		<result property="creater" column="CREATER" />
+		<!--创建时间-->
+		<result property="createTime" column="CREATE_TIME" />
+		<!--更新人-->
+		<result property="updater" column="UPDATER" />
+		<!--更新时间-->
+		<result property="updateTime" column="UPDATE_TIME" />
+		<!--备用字段1-->
+		<result property="bakstr1" column="BAKSTR1" />
+		<!--备用字段2-->
+		<result property="bakstr2" column="BAKSTR2" />
+		<!--备用字段3-->
+		<result property="bakstr3" column="BAKSTR3" />
+		<!--备用字段4-->
+		<result property="bakstr4" column="BAKSTR4" />
+		<!--备用字段5-->
+		<result property="bakstr5" column="BAKSTR5" />
+		<!--备用字段6-->
+		<result property="bakstr6" column="BAKSTR6" />
+		<!--备用字段7-->
+		<result property="bakstr7" column="BAKSTR7" />
+		<!--备用字段8-->
+		<result property="bakstr8" column="BAKSTR8" />
+		<!--备用字段9-->
+		<result property="bakstr9" column="BAKSTR9" />
+		<!--回访状态（0：未回访，1：已回访）-->
+		<result property="visitState" column="VISIT_STATE" />
+		<!--客服处理状态（0：未处理，1：已处理）-->
+		<result property="workState" column="WORK_STATE" />
+		<result property="parentId" column="PARENT_ID" />
+		<result property="isAssigned" column="IS_ASSIGNED" />
+		<result property="startPlace" column="START_PLACE" />
+		<result property="endPlace" column="END_PLACE" />
+		<result property="carNumber" column="CAR_NUMBER" />
+		<result property="couponsId" column="COUPONS_ID" />
+		<result property="couponsNo" column="COUPONS_NO" />
+		<result property="couponsMoney" column="COUPONS_MONEY" />
+		<!-- 起始地
+		<association property="startPlace" column="ORDER_ID"  select="com.dz.mapper.MovefieldOrderMapper.getStartPlace" />
+		起始地
+		<association property="endPlace" column="ORDER_ID"  select="com.dz.mapper.MovefieldOrderMapper.getEndPlace" /> -->
+	</resultMap>
+	
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 ORDER_ID,	ORDER_SOURCE,	ORDER_TYPE,	CAR_TYPE,	CAR_NUM,	CAR_TYPE_PRICE,	ORDERTAKING_ID,	ORDERTAKING_NAME,	CUSTOMER_PHONE,	CUSTOMER_NAME,	CONSIGNMENT_UNIT,	BOOK_DATE,	EXPECTED_TIME_FILE,	TIME_FILE,	INDEPENDENT_MANPOWER_PRICE,	INDEPENDENT_MANPOWER_NUM,	INDEPENDENT_MANPOWER_TIME,	TRANSPORT_TIMES,	ORDER_TIMES,	DESCRIPETION,	STATUS,	ORDER_START_DATE,	TRANPORT_START_DATE,	TRANPORT_END_DATE,	FINISH_DATE,	CALLBACK_PHONE,	EXPECTED_KM,	START_END_DISTANCE_PRICE,	EXPECTED_TOTAL_PRICE,	RECEIPT_PRICE,	BACK_PRICE,	INVOICE_PRICE,	BREAK_PACKAGE_SUM_PRICE,	BREAK_PACKAGE_TRANSFER_PRICE,	MOVE_SUM_PRICE,	MOVE_TRANSFE_RPRICE,	PACK_SUM_PRICE,	PACK_TRANSFE_PRICE,	ACCESSORIES_PRICE,	SPECIAL_PRICE,	HOLIDAYS_PRICE,	INVOICE_TYPE,	TAXPAYER_IDENTITY_NUMBER,	INVOICE_COMPANY,	ADDRESS_PHONE,	INVOICE_ADDRESS,	BANK_BANKNUMBER,	OTHER_PRICE,	OTHER_PRICE_DESCRIPTION,	OTHER_PRICE2,	OTHER_PRICE_DESCRIPTION2,	OTHER_PRICE3,	OTHER_PRICE_DESCRIPTION3,	OTHER_PRICE4,	OTHER_PRICE_DESCRIPTION4,	IS_LOCAL,	TASK_TYPE,	DEL_FLAG,	IS_INVOICE,	OBJECTDEXCRIPTION,	PARENT_ID,	IS_ASSIGNED,	CREATER,	CREATE_TIME,	UPDATER,	UPDATE_TIME,	VISIT_STATE,	WORK_STATE,	BAKSTR1,	BAKSTR2,	BAKSTR3,	BAKSTR4,	BAKSTR5,	BAKSTR6,	BAKSTR7,	BAKSTR8,	BAKSTR9,	START_PLACE,	END_PLACE,	CAR_NUMBER,COUPONS_ID,COUPONS_NO,COUPONS_MONEY
+	</sql>
+
+	<select id="getMovefieldOrderListYesterday" resultMap="MovefieldOrderResultMap">
+		select * from m_movefield_order where 1=1 AND del_flag = 1
+		<if test="createTime != null">
+			<![CDATA[	AND DATE_FORMAT(create_time,'%Y-%m-%d') =  #{createTime}   ]]>
+		</if>
+	</select>
+	<select id="getMovefieldOrderListHistory" resultMap="MovefieldOrderResultMap">
+		select * from m_movefield_order where 1=1 AND del_flag = 1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{createDate}   ]]>
+		</if>
+		limit #{from},#{to}
+	</select>
+
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.dzjt.order.entity.MovefieldOrder">
+		 INSERT INTO m_movefield_order
+ 		(ORDER_ID,ORDER_SOURCE,ORDER_TYPE,CAR_TYPE,CAR_NUM,ORDERTAKING_ID,ORDERTAKING_NAME,CUSTOMER_PHONE,CUSTOMER_NAME,CONSIGNMENT_UNIT,BOOK_DATE,EXPECTED_TIME_FILE,TIME_FILE,INDEPENDENT_MANPOWER_PRICE,INDEPENDENT_MANPOWER_NUM,INDEPENDENT_MANPOWER_TIME,TRANSPORT_TIMES,ORDER_TIMES,DESCRIPETION,STATUS,ORDER_START_DATE,TRANPORT_START_DATE,TRANPORT_END_DATE,FINISH_DATE,CALLBACK_PHONE,EXPECTED_KM,START_END_DISTANCE_PRICE,EXPECTED_TOTAL_PRICE,RECEIPT_PRICE,BACK_PRICE,INVOICE_PRICE,BREAK_PACKAGE_SUM_PRICE,BREAK_PACKAGE_TRANSFER_PRICE,MOVE_SUM_PRICE,MOVE_TRANSFE_RPRICE,PACK_SUM_PRICE,PACK_TRANSFE_PRICE,OTHER_PRICE,OTHER_PRICE_DESCRIPTION,OTHER_PRICE2,OTHER_PRICE_DESCRIPTION2,OTHER_PRICE3,OTHER_PRICE_DESCRIPTION3,OTHER_PRICE4,OTHER_PRICE_DESCRIPTION4,IS_LOCAL,TASK_TYPE,DEL_FLAG,IS_INVOICE,OBJECTDEXCRIPTION,CREATER,CREATE_TIME,UPDATER,UPDATE_TIME,BAKSTR1,BAKSTR2,BAKSTR3,BAKSTR4,BAKSTR5,BAKSTR6,BAKSTR7,BAKSTR8,BAKSTR9,START_PLACE,END_PLACE,VISIT_STATE) 
+		 VALUES 
+ 		(#{orderId},#{orderSource},#{orderType},#{carType},#{carNum},#{ordertakingId},#{ordertakingName},#{customerPhone},#{customerName},#{consignmentUnit},#{bookDate},#{expectedTimeFile},#{timeFile},#{independentManpowerPrice},#{independentManpowerNum},#{independentManpowerTime},#{transportTimes},#{orderTimes},#{descripetion},#{status},#{orderStartDate},#{tranportStartDate},#{tranportEndDate},#{finishDate},#{callbackPhone},#{expectedKm},#{startEndDistancePrice},#{expectedTotalPrice},#{receiptPrice},#{backPrice},#{invoicePrice},#{breakPackageSumPrice},#{breakPackageTransferPrice},#{moveSumPrice},#{moveTransfeRprice},#{packSumPrice},#{packTransfePrice},#{otherPrice},#{otherPriceDescription},#{otherPrice2},#{otherPriceDescription2},#{otherPrice3},#{otherPriceDescription3},#{otherPrice4},#{otherPriceDescription4},#{isLocal},#{taskType},#{delFlag},#{isInvoice},#{objectdexcription},#{creater},#{createTime},#{updater},#{updateTime},#{bakstr1},#{bakstr2},#{bakstr3},#{bakstr4},#{bakstr5},#{bakstr6},#{bakstr7},#{bakstr8},#{bakstr9},#{startPlace},#{endPlace},#{visitState}) 
+	</insert>
+
+	
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.dzjt.order.entity.MovefieldOrder">
+		 INSERT INTO m_movefield_order
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="orderId != null">
+				 ORDER_ID,
+			</if>
+			<if test="orderSource != null">
+				 ORDER_SOURCE,
+			</if>
+			<if test="orderType != null">
+				 ORDER_TYPE,
+			</if>
+			<if test="carType != null">
+				 CAR_TYPE,
+			</if>
+			<if test="carNum != null">
+				 CAR_NUM,
+			</if>
+			<if test="carTypePrice != null">
+				 CAR_TYPE_PRICE,
+			</if>
+			<if test="ordertakingId != null">
+				 ORDERTAKING_ID,
+			</if>
+			<if test="ordertakingName != null">
+				 ORDERTAKING_NAME,
+			</if>
+			<if test="customerPhone != null">
+				 CUSTOMER_PHONE,
+			</if>
+			<if test="customerName != null">
+				 CUSTOMER_NAME,
+			</if>
+			<if test="consignmentUnit != null">
+				 CONSIGNMENT_UNIT,
+			</if>
+			<if test="bookDate != null">
+				 BOOK_DATE,
+			</if>
+			<if test="expectedTimeFile != null">
+				 EXPECTED_TIME_FILE,
+			</if>
+			<if test="timeFile != null">
+				 TIME_FILE,
+			</if>
+			<if test="independentManpowerPrice != null">
+				 INDEPENDENT_MANPOWER_PRICE,
+			</if>
+			<if test="independentManpowerNum != null">
+				 INDEPENDENT_MANPOWER_NUM,
+			</if>
+			<if test="independentManpowerTime != null">
+				 INDEPENDENT_MANPOWER_TIME,
+			</if>
+			<if test="transportTimes != null">
+				 TRANSPORT_TIMES,
+			</if>
+			<if test="orderTimes != null">
+				 ORDER_TIMES,
+			</if>
+			<if test="descripetion != null">
+				 DESCRIPETION,
+			</if>
+			<if test="status != null">
+				 STATUS,
+			</if>
+			<if test="orderStartDate != null">
+				 ORDER_START_DATE,
+			</if>
+			<if test="tranportStartDate != null">
+				 TRANPORT_START_DATE,
+			</if>
+			<if test="tranportEndDate != null">
+				 TRANPORT_END_DATE,
+			</if>
+			<if test="finishDate != null">
+				 FINISH_DATE,
+			</if>
+			<if test="callbackPhone != null">
+				 CALLBACK_PHONE,
+			</if>
+			<if test="expectedKm != null">
+				 EXPECTED_KM,
+			</if>
+			<if test="startEndDistancePrice != null">
+				 START_END_DISTANCE_PRICE,
+			</if>
+			<if test="expectedTotalPrice != null">
+				 EXPECTED_TOTAL_PRICE,
+			</if>
+			<if test="receiptPrice != null">
+				 RECEIPT_PRICE,
+			</if>
+			<if test="backPrice != null">
+				 BACK_PRICE,
+			</if>
+			<if test="invoicePrice != null">
+				 INVOICE_PRICE,
+			</if>
+			<if test="breakPackageSumPrice != null">
+				 BREAK_PACKAGE_SUM_PRICE,
+			</if>
+			<if test="breakPackageTransferPrice != null">
+				 BREAK_PACKAGE_TRANSFER_PRICE,
+			</if>
+			<if test="moveSumPrice != null">
+				 MOVE_SUM_PRICE,
+			</if>
+			<if test="moveTransfeRprice != null">
+				 MOVE_TRANSFE_RPRICE,
+			</if>
+			<if test="packSumPrice != null">
+				 PACK_SUM_PRICE,
+			</if>
+			<if test="packTransfePrice != null">
+				 PACK_TRANSFE_PRICE,
+			</if>
+			<if test="accessoriesPrice != null">
+				 ACCESSORIES_PRICE,
+			</if>
+			<if test="specialPrice != null">
+				 SPECIAL_PRICE,
+			</if>
+			<if test="holidaysPrice != null">
+				 HOLIDAYS_PRICE,
+			</if>
+			<if test="invoiceType != null">
+				 INVOICE_TYPE,
+			</if>
+			<if test="taxpayerIdentityNumber != null">
+				 TAXPAYER_IDENTITY_NUMBER,
+			</if>
+			<if test="invoiceCompany != null">
+				 INVOICE_COMPANY,
+			</if>
+			<if test="addressPhone != null">
+				 ADDRESS_PHONE,
+			</if>
+			<if test="invoiceAddress != null">
+				 INVOICE_ADDRESS,
+			</if>
+			<if test="bankBanknumber != null">
+				 BANK_BANKNUMBER,
+			</if>
+			<if test="otherPrice != null">
+				 OTHER_PRICE,
+			</if>
+			<if test="otherPriceDescription != null">
+				 OTHER_PRICE_DESCRIPTION,
+			</if>
+			<if test="otherPrice2 != null">
+				 OTHER_PRICE2,
+			</if>
+			<if test="otherPriceDescription2 != null">
+				 OTHER_PRICE_DESCRIPTION2,
+			</if>
+			<if test="otherPrice3 != null">
+				 OTHER_PRICE3,
+			</if>
+			<if test="otherPriceDescription3 != null">
+				 OTHER_PRICE_DESCRIPTION3,
+			</if>
+			<if test="otherPrice4 != null">
+				 OTHER_PRICE4,
+			</if>
+			<if test="otherPriceDescription4 != null">
+				 OTHER_PRICE_DESCRIPTION4,
+			</if>
+			<if test="isLocal != null">
+				 IS_LOCAL,
+			</if>
+			<if test="taskType != null">
+				 TASK_TYPE,
+			</if>
+			<if test="delFlag != null">
+				 DEL_FLAG,
+			</if>
+			<if test="isInvoice != null">
+				 IS_INVOICE,
+			</if>
+			<if test="objectdexcription != null">
+				 OBJECTDEXCRIPTION,
+			</if>
+			<if test="creater != null">
+				 CREATER,
+			</if>
+			<if test="createTime != null">
+				 CREATE_TIME,
+			</if>
+			<if test="updater != null">
+				 UPDATER,
+			</if>
+			<if test="updateTime != null">
+				 UPDATE_TIME,
+			</if>
+			<if test="parentId != null">
+				 PARENT_ID,
+			</if>
+			<if test="isAssigned != null">
+				 IS_ASSIGNED,
+			</if>
+			<if test="bakstr1 != null">
+				 BAKSTR1,
+			</if>
+			<if test="bakstr2 != null">
+				 BAKSTR2,
+			</if>
+			<if test="bakstr3 != null">
+				 BAKSTR3,
+			</if>
+			<if test="bakstr4 != null">
+				 BAKSTR4,
+			</if>
+			<if test="bakstr5 != null">
+				 BAKSTR5,
+			</if>
+			<if test="bakstr6 != null">
+				 BAKSTR6,
+			</if>
+			<if test="bakstr7 != null">
+				 BAKSTR7,
+			</if>
+			<if test="bakstr8 != null">
+				 BAKSTR8,
+			</if>
+			<if test="bakstr9 != null">
+				 BAKSTR9,
+			</if>
+			<if test="startPlace != null">
+				 START_PLACE,
+			</if>
+			<if test="endPlace != null">
+				 END_PLACE,
+			</if>
+			<if test="carNumber != null">
+				 CAR_NUMBER,
+			</if>
+			<if test="visitState != null">
+				 VISIT_STATE,
+			</if>
+			<if test="workState != null">
+				 WORK_STATE,
+			</if>
+			<if test="couponsId != null">
+				 COUPONS_ID,
+			</if>
+			<if test="couponsNo != null">
+				 COUPONS_NO,
+			</if>
+			<if test="couponsMoney != null">
+				 COUPONS_MONEY,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="orderId!=null">
+				 #{orderId},
+			</if>
+			<if test="orderSource!=null">
+				 #{orderSource},
+			</if>
+			<if test="orderType!=null">
+				 #{orderType},
+			</if>
+			<if test="carType!=null">
+				 #{carType},
+			</if>
+			<if test="carNum!=null">
+				 #{carNum},
+			</if>
+			<if test="carTypePrice!=null">
+				 #{carTypePrice},
+			</if>
+			<if test="ordertakingId!=null">
+				 #{ordertakingId},
+			</if>
+			<if test="ordertakingName!=null">
+				 #{ordertakingName},
+			</if>
+			<if test="customerPhone!=null">
+				 #{customerPhone},
+			</if>
+			<if test="customerName!=null">
+				 #{customerName},
+			</if>
+			<if test="consignmentUnit!=null">
+				 #{consignmentUnit},
+			</if>
+			<if test="bookDate!=null">
+				 #{bookDate},
+			</if>
+			<if test="expectedTimeFile!=null">
+				 #{expectedTimeFile},
+			</if>
+			<if test="timeFile!=null">
+				 #{timeFile},
+			</if>
+			<if test="independentManpowerPrice!=null">
+				 #{independentManpowerPrice},
+			</if>
+			<if test="independentManpowerNum!=null">
+				 #{independentManpowerNum},
+			</if>
+			<if test="independentManpowerTime!=null">
+				 #{independentManpowerTime},
+			</if>
+			<if test="transportTimes!=null">
+				 #{transportTimes},
+			</if>
+			<if test="orderTimes!=null">
+				 #{orderTimes},
+			</if>
+			<if test="descripetion!=null">
+				 #{descripetion},
+			</if>
+			<if test="status!=null">
+				 #{status},
+			</if>
+			<if test="orderStartDate!=null">
+				 #{orderStartDate},
+			</if>
+			<if test="tranportStartDate!=null">
+				 #{tranportStartDate},
+			</if>
+			<if test="tranportEndDate!=null">
+				 #{tranportEndDate},
+			</if>
+			<if test="finishDate!=null">
+				 #{finishDate},
+			</if>
+			<if test="callbackPhone!=null">
+				 #{callbackPhone},
+			</if>
+			<if test="expectedKm!=null">
+				 #{expectedKm},
+			</if>
+			<if test="startEndDistancePrice!=null">
+				 #{startEndDistancePrice},
+			</if>
+			<if test="expectedTotalPrice!=null">
+				 #{expectedTotalPrice},
+			</if>
+			<if test="receiptPrice!=null">
+				 #{receiptPrice},
+			</if>
+			<if test="backPrice!=null">
+				 #{backPrice},
+			</if>
+			<if test="invoicePrice!=null">
+				 #{invoicePrice},
+			</if>
+			<if test="breakPackageSumPrice!=null">
+				 #{breakPackageSumPrice},
+			</if>
+			<if test="breakPackageTransferPrice!=null">
+				 #{breakPackageTransferPrice},
+			</if>
+			<if test="moveSumPrice!=null">
+				 #{moveSumPrice},
+			</if>
+			<if test="moveTransfeRprice!=null">
+				 #{moveTransfeRprice},
+			</if>
+			<if test="packSumPrice!=null">
+				 #{packSumPrice},
+			</if>
+			<if test="packTransfePrice!=null">
+				 #{packTransfePrice},
+			</if>
+			<if test="accessoriesPrice!=null">
+				 #{accessoriesPrice},
+			</if>
+			<if test="specialPrice!=null">
+				 #{specialPrice},
+			</if>
+			<if test="holidaysPrice!=null">
+				 #{holidaysPrice},
+			</if>
+			<if test="invoiceType!=null">
+				 #{invoiceType},
+			</if>
+			<if test="taxpayerIdentityNumber!=null">
+				 #{taxpayerIdentityNumber},
+			</if>
+			<if test="invoiceCompany!=null">
+				 #{invoiceCompany},
+			</if>
+			<if test="addressPhone!=null">
+				 #{addressPhone},
+			</if>
+			<if test="invoiceAddress!=null">
+				 #{invoiceAddress},
+			</if>
+			<if test="bankBanknumber!=null">
+				 #{bankBanknumber},
+			</if>
+			<if test="otherPrice!=null">
+				 #{otherPrice},
+			</if>
+			<if test="otherPriceDescription!=null">
+				 #{otherPriceDescription},
+			</if>
+			<if test="otherPrice2!=null">
+				 #{otherPrice2},
+			</if>
+			<if test="otherPriceDescription2!=null">
+				 #{otherPriceDescription2},
+			</if>
+			<if test="otherPrice3!=null">
+				 #{otherPrice3},
+			</if>
+			<if test="otherPriceDescription3!=null">
+				 #{otherPriceDescription3},
+			</if>
+			<if test="otherPrice4!=null">
+				 #{otherPrice4},
+			</if>
+			<if test="otherPriceDescription4!=null">
+				 #{otherPriceDescription4},
+			</if>
+			<if test="isLocal!=null">
+				 #{isLocal},
+			</if>
+			<if test="taskType!=null">
+				 #{taskType},
+			</if>
+			<if test="delFlag!=null">
+				 #{delFlag},
+			</if>
+			<if test="isInvoice!=null">
+				 #{isInvoice},
+			</if>
+			<if test="objectdexcription!=null">
+				 #{objectdexcription},
+			</if>
+			<if test="creater!=null">
+				 #{creater},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updater!=null">
+				 #{updater},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+				<if test="parentId != null">
+				 #{parentId},
+			</if>
+			<if test="isAssigned != null">
+				 #{isAssigned},
+			</if>
+			<if test="bakstr1!=null">
+				 #{bakstr1},
+			</if>
+			<if test="bakstr2!=null">
+				 #{bakstr2},
+			</if>
+			<if test="bakstr3!=null">
+				 #{bakstr3},
+			</if>
+			<if test="bakstr4!=null">
+				 #{bakstr4},
+			</if>
+			<if test="bakstr5!=null">
+				 #{bakstr5},
+			</if>
+			<if test="bakstr6!=null">
+				 #{bakstr6},
+			</if>
+			<if test="bakstr7!=null">
+				 #{bakstr7},
+			</if>
+			<if test="bakstr8!=null">
+				 #{bakstr8},
+			</if>
+			<if test="bakstr9!=null">
+				 #{bakstr9},
+			</if>
+			<if test="startPlace != null">
+				 #{startPlace},
+			</if>
+			<if test="endPlace != null">
+				  #{endPlace},
+			</if>
+			<if test="carNumber != null">
+				  #{carNumber},
+			</if>
+			<if test="visitState != null">
+				  #{visitState},
+			</if>
+			<if test="workState!=null">
+				 #{workState},
+			</if>
+			<if test="couponsId!=null">
+				 #{couponsId},
+			</if>
+			<if test="couponsNo!=null">
+				 #{couponsNo},
+			</if>
+			<if test="couponsMoney!=null">
+				 #{couponsMoney},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.dzjt.order.entity.MovefieldOrder">
+		 UPDATE m_movefield_order
+ 		 <set> 
+			<if test="orderSource != null">
+				 ORDER_SOURCE = #{orderSource},
+			</if>
+			<if test="orderType != null">
+				 ORDER_TYPE = #{orderType},
+			</if>
+			<if test="carType != null">
+				 CAR_TYPE = #{carType},
+			</if>
+			<if test="carTypePrice != null">
+				 CAR_TYPE_PRICE = #{carTypePrice},
+			</if>
+			<if test="carNum != null">
+				 CAR_NUM = #{carNum},
+			</if>
+			<if test="ordertakingId != null">
+				 ORDERTAKING_ID = #{ordertakingId},
+			</if>
+			<if test="ordertakingName != null">
+				 ORDERTAKING_NAME = #{ordertakingName},
+			</if>
+			<if test="customerPhone != null">
+				 CUSTOMER_PHONE = #{customerPhone},
+			</if>
+			<if test="customerName != null">
+				 CUSTOMER_NAME = #{customerName},
+			</if>
+			<if test="consignmentUnit != null">
+				 CONSIGNMENT_UNIT = #{consignmentUnit},
+			</if>
+			<if test="bookDate != null">
+				 BOOK_DATE = #{bookDate},
+			</if>
+			<if test="expectedTimeFile != null">
+				 EXPECTED_TIME_FILE = #{expectedTimeFile},
+			</if>
+			<if test="timeFile != null">
+				 TIME_FILE = #{timeFile},
+			</if>
+			<if test="independentManpowerPrice != null">
+				 INDEPENDENT_MANPOWER_PRICE = #{independentManpowerPrice},
+			</if>
+			<if test="independentManpowerNum != null">
+				 INDEPENDENT_MANPOWER_NUM = #{independentManpowerNum},
+			</if>
+			<if test="independentManpowerTime != null">
+				 INDEPENDENT_MANPOWER_TIME = #{independentManpowerTime},
+			</if>
+			<if test="transportTimes != null">
+				 TRANSPORT_TIMES = #{transportTimes},
+			</if>
+			<if test="orderTimes != null">
+				 ORDER_TIMES = #{orderTimes},
+			</if>
+			<if test="descripetion != null">
+				 DESCRIPETION = #{descripetion},
+			</if>
+			<if test="status != null">
+				 STATUS = #{status},
+			</if>
+			<if test="orderStartDate != null">
+				 ORDER_START_DATE = #{orderStartDate},
+			</if>
+			<if test="tranportStartDate != null">
+				 TRANPORT_START_DATE = #{tranportStartDate},
+			</if>
+			<if test="tranportEndDate != null">
+				 TRANPORT_END_DATE = #{tranportEndDate},
+			</if>
+			<if test="finishDate != null">
+				 FINISH_DATE = #{finishDate},
+			</if>
+			<if test="callbackPhone != null">
+				 CALLBACK_PHONE = #{callbackPhone},
+			</if>
+			<if test="expectedKm != null">
+				 EXPECTED_KM = #{expectedKm},
+			</if>
+			<if test="startEndDistancePrice != null">
+				 START_END_DISTANCE_PRICE = #{startEndDistancePrice},
+			</if>
+			<if test="expectedTotalPrice != null">
+				 EXPECTED_TOTAL_PRICE = #{expectedTotalPrice},
+			</if>
+			<if test="receiptPrice != null">
+				 RECEIPT_PRICE = #{receiptPrice},
+			</if>
+			<if test="backPrice != null">
+				 BACK_PRICE = #{backPrice},
+			</if>
+			<if test="invoicePrice != null">
+				 INVOICE_PRICE = #{invoicePrice},
+			</if>
+			<if test="breakPackageSumPrice != null">
+				 BREAK_PACKAGE_SUM_PRICE = #{breakPackageSumPrice},
+			</if>
+			<if test="breakPackageTransferPrice != null">
+				 BREAK_PACKAGE_TRANSFER_PRICE = #{breakPackageTransferPrice},
+			</if>
+			<if test="moveSumPrice != null">
+				 MOVE_SUM_PRICE = #{moveSumPrice},
+			</if>
+			<if test="moveTransfeRprice != null">
+				 MOVE_TRANSFE_RPRICE = #{moveTransfeRprice},
+			</if>
+			<if test="packSumPrice != null">
+				 PACK_SUM_PRICE = #{packSumPrice},
+			</if>
+			<if test="packTransfePrice != null">
+				 PACK_TRANSFE_PRICE = #{packTransfePrice},
+			</if>
+			<if test="specialPrice != null">
+				 SPECIAL_PRICE = #{specialPrice},
+			</if>
+			<if test="accessoriesPrice != null">
+				 ACCESSORIES_PRICE = #{accessoriesPrice},
+			</if>
+			<if test="otherPrice != null">
+				 OTHER_PRICE = #{otherPrice},
+			</if>
+			<if test="otherPriceDescription != null">
+				 OTHER_PRICE_DESCRIPTION = #{otherPriceDescription},
+			</if>
+			<if test="otherPrice2 != null">
+				 OTHER_PRICE2 = #{otherPrice2},
+			</if>
+			<if test="otherPriceDescription2 != null">
+				 OTHER_PRICE_DESCRIPTION2 = #{otherPriceDescription2},
+			</if>
+			<if test="otherPrice3 != null">
+				 OTHER_PRICE3 = #{otherPrice3},
+			</if>
+			<if test="otherPriceDescription3 != null">
+				 OTHER_PRICE_DESCRIPTION3 = #{otherPriceDescription3},
+			</if>
+			<if test="otherPrice4 != null">
+				 OTHER_PRICE4 = #{otherPrice4},
+			</if>
+			<if test="otherPriceDescription4 != null">
+				 OTHER_PRICE_DESCRIPTION4 = #{otherPriceDescription4},
+			</if>
+			<if test="isLocal != null">
+				 IS_LOCAL = #{isLocal},
+			</if>
+			<if test="taskType != null">
+				 TASK_TYPE = #{taskType},
+			</if>
+			<if test="delFlag != null">
+				 DEL_FLAG = #{delFlag},
+			</if>
+			<if test="isInvoice != null">
+				 IS_INVOICE = #{isInvoice},
+			</if>
+			<if test="objectdexcription != null">
+				 OBJECTDEXCRIPTION = #{objectdexcription},
+			</if>
+			<if test="creater != null">
+				 CREATER = #{creater},
+			</if>
+			<if test="createTime != null">
+				 CREATE_TIME = #{createTime},
+			</if>
+			<if test="updater != null">
+				 UPDATER = #{updater},
+			</if>
+			<if test="updateTime != null">
+				 UPDATE_TIME = #{updateTime},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID= #{parentId},
+			</if>
+			<if test="isAssigned != null">
+				IS_ASSIGNED= #{isAssigned},
+			</if>
+			<if test="bakstr1 != null">
+				 BAKSTR1 = #{bakstr1},
+			</if>
+			<if test="bakstr2 != null">
+				 BAKSTR2 = #{bakstr2},
+			</if>
+			<if test="bakstr3 != null">
+				 BAKSTR3 = #{bakstr3},
+			</if>
+			<if test="bakstr4 != null">
+				 BAKSTR4 = #{bakstr4},
+			</if>
+			<if test="bakstr5 != null">
+				 BAKSTR5 = #{bakstr5},
+			</if>
+			<if test="bakstr6 != null">
+				 BAKSTR6 = #{bakstr6},
+			</if>
+			<if test="bakstr7 != null">
+				 BAKSTR7 = #{bakstr7},
+			</if>
+			<if test="bakstr8 != null">
+				 BAKSTR8 = #{bakstr8},
+			</if>
+			<if test="bakstr9 != null">
+				 BAKSTR9 = #{bakstr9},
+			</if>
+			
+            <if test="addressPhone != null">
+				 ADDRESS_PHONE = #{addressPhone},
+			</if>
+			<if test="taxpayerIdentityNumber != null">
+				 TAXPAYER_IDENTITY_NUMBER = #{taxpayerIdentityNumber},
+			</if>
+			<if test="invoiceCompany != null">
+				 INVOICE_COMPANY = #{invoiceCompany},
+			</if>
+			<if test="invoiceAddress != null">
+				 INVOICE_ADDRESS = #{invoiceAddress},
+			</if>
+				<if test="bankBanknumber != null">
+				 BANK_BANKNUMBER = #{bankBanknumber},
+			</if>
+				<if test="invoiceType != null">
+				 INVOICE_TYPE = #{invoiceType},
+			</if>
+			<if test="startPlace != null">
+				START_PLACE =  #{startPlace},
+			</if>
+			<if test="endPlace != null">
+				 END_PLACE = #{endPlace},
+			</if>
+			<if test="carNumber != null">
+				 CAR_NUMBER = #{carNumber},
+			</if>
+			<if test="visitState != null">
+				 VISIT_STATE = #{visitState},
+			</if>
+			<if test="workState != null">
+				 WORK_STATE = #{workState},
+			</if>
+			<if test="couponsId != null">
+				 COUPONS_ID = #{couponsId},
+			</if>
+			<if test="couponsNo != null">
+				 COUPONS_NO = #{couponsNo},
+			</if>
+			<if test="couponsMoney != null">
+				 COUPONS_MONEY = #{couponsMoney},
+			</if>
+ 		 </set>
+		 WHERE ORDER_ID = #{orderId}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.dzjt.order.entity.MovefieldOrder">
+		 UPDATE m_movefield_order
+		 SET 
+			 ORDER_SOURCE = #{orderSource},
+			 ORDER_TYPE = #{orderType},
+			 CAR_TYPE = #{carType},
+			 CAR_NUM = #{carNum},
+			 ORDERTAKING_ID = #{ordertakingId},
+			 ORDERTAKING_NAME = #{ordertakingName},
+			 CUSTOMER_PHONE = #{customerPhone},
+			 CUSTOMER_NAME = #{customerName},
+			 CONSIGNMENT_UNIT = #{consignmentUnit},
+			 BOOK_DATE = #{bookDate},
+			 EXPECTED_TIME_FILE = #{expectedTimeFile},
+			 TIME_FILE = #{timeFile},
+			 INDEPENDENT_MANPOWER_PRICE = #{independentManpowerPrice},
+			 INDEPENDENT_MANPOWER_NUM = #{independentManpowerNum},
+			 INDEPENDENT_MANPOWER_TIME = #{independentManpowerTime},
+			 TRANSPORT_TIMES = #{transportTimes},
+			 ORDER_TIMES = #{orderTimes},
+			 DESCRIPETION = #{descripetion},
+			 STATUS = #{status},
+			 ORDER_START_DATE = #{orderStartDate},
+			 TRANPORT_START_DATE = #{tranportStartDate},
+			 TRANPORT_END_DATE = #{tranportEndDate},
+			 FINISH_DATE = #{finishDate},
+			 CALLBACK_PHONE = #{callbackPhone},
+			 EXPECTED_KM = #{expectedKm},
+			 START_END_DISTANCE_PRICE = #{startEndDistancePrice},
+			 EXPECTED_TOTAL_PRICE = #{expectedTotalPrice},
+			 RECEIPT_PRICE = #{receiptPrice},
+			 BACK_PRICE = #{backPrice},
+			 INVOICE_PRICE = #{invoicePrice},
+			 BREAK_PACKAGE_SUM_PRICE = #{breakPackageSumPrice},
+			 BREAK_PACKAGE_TRANSFER_PRICE = #{breakPackageTransferPrice},
+			 MOVE_SUM_PRICE = #{moveSumPrice},
+			 MOVE_TRANSFE_RPRICE = #{moveTransfeRprice},
+			 PACK_SUM_PRICE = #{packSumPrice},
+			 PACK_TRANSFE_PRICE = #{packTransfePrice},
+			 OTHER_PRICE = #{otherPrice},
+			 OTHER_PRICE_DESCRIPTION = #{otherPriceDescription},
+			 OTHER_PRICE2 = #{otherPrice2},
+			 OTHER_PRICE_DESCRIPTION2 = #{otherPriceDescription2},
+			 OTHER_PRICE3 = #{otherPrice3},
+			 OTHER_PRICE_DESCRIPTION3 = #{otherPriceDescription3},
+			 OTHER_PRICE4 = #{otherPrice4},
+			 OTHER_PRICE_DESCRIPTION4 = #{otherPriceDescription4},
+			 IS_LOCAL = #{isLocal},
+			 TASK_TYPE = #{taskType},
+			 DEL_FLAG = #{delFlag},
+			 IS_INVOICE = #{isInvoice},
+			 OBJECTDEXCRIPTION = #{objectdexcription},
+			 CREATER = #{creater},
+			 CREATE_TIME = #{createTime},
+			 UPDATER = #{updater},
+			 UPDATE_TIME = #{updateTime},
+			 BAKSTR1 = #{bakstr1},
+			 BAKSTR2 = #{bakstr2},
+			 BAKSTR3 = #{bakstr3},
+			 BAKSTR4 = #{bakstr4},
+			 BAKSTR5 = #{bakstr5},
+			 BAKSTR6 = #{bakstr6},
+			 BAKSTR7 = #{bakstr7},
+			 BAKSTR8 = #{bakstr8},
+			 BAKSTR9 = #{bakstr9},
+			 START_PLACE = #{startPlace},
+			 END_PLACE = #{endPlace},
+			 CAR_NUMBER = #{carNumber},
+			 VISIT_STATE = #{visitState},
+			 WORK_STATE = #{workState},
+			 COUPONS_ID = #{couponsId},
+			 COUPONS_NO = #{couponsNo},
+			 COUPONS_MONEY = #{couponsMoney}
+		 WHERE ORDER_ID = #{orderId}
+	</update>
+
+</mapper>

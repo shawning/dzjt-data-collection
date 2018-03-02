@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: admin
+    url: jdbc:mysql://localhost:3306/dzwl_test
+  freemarker:
+    suffix: .html
+    cache: false
+    request-context-attribute: request
+    expose-session-attributes: true
+  jpa:
+    database: oracle
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+          hibernate:
+            format_sql: true
+    open-in-view: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 10Mb
+
+server:
+  port: 8080
+  context-path: /dzjt-data-collection
+  session:
+    timeout: 1800
+logging:
+  config: classpath:config/logback-config.xml
+#文件上传配置
+resource:
+  #上传的文件存储路径
+  file-path: /Users/liusy/develop/log/
+  #图片显示URL 再加 文件名
+  file-url: http://localhost:8080/esb-admin/disk/
+  #图片上传数量
+  image-count: 5
+mybatis:
+  #实体类所做包
+  type-aliases-package: com.dzjt.*.entity.*
+  #mapper.xml所在位置
+  mapper-locations: classpath:mapper/*.xml
+
+thymeleaf:
+  cache: false
+#####文件存储路径#######
+dzjt:
+    file:
+      dzyx:
+        basepath: D:/dzjt/
+        markfile: /home/shared_disk/dzjt/datacollection/dzcx/mark.md
+        filesize: 10000
+        key: a6$Cmqagz#P!K^p3QpcG*21DQTc3jtc@
+      sftp:
+        ip: 139.198.190.164
+        uploadpath: /usr/dzjt/sftp/datacollection/dzyx
+        username: root
+        password:
+        privatekey: classpath:dzjt_ftp_server_key
+        port: 60218

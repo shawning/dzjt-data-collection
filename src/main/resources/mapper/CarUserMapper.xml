@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- <mapper namespace="com.visionet.dao.CarUserMapper"> -->
+<mapper namespace="com.dzjt.carUser.mapper.CarUserMapper">
+	<!--实体映射 -->
+	<resultMap id="CarUserResultMap" type="com.dzjt.carUser.entity.CarUser">
+		<!--主键 -->
+		<id property="id" column="id" />
+		<!--司机家庭住址 -->
+		<result property="address" column="address" />
+		<!--车主私人手机号码 -->
+		<result property="privatePhone" column="private_phone" />
+		<!--手机号码 -->
+		<result property="phone" column="phone" />
+		<!--密码 -->
+		<result property="password" column="password" />
+		<!--类型（0大众自营，1加盟，2其他车主） -->
+		<result property="type" column="type" />
+		<!--头像信息 -->
+		<result property="headPic" column="head_pic" />
+		<!--名称 -->
+		<result property="name" column="name" />
+		<!--称呼 -->
+		<result property="nickName" column="nick_name" />
+		<!--城市 -->
+		<result property="city" column="city" />
+		<!--账户等级 -->
+		<result property="level" column="level" />
+		<!--综合评价等级 -->
+		<result property="grade" column="grade" />
+		<!--账户累计总额 -->
+		<result property="total" column="total" />
+		<!--账户可用余额 -->
+		<result property="balance" column="balance" />
+		<!--账户累积积分 -->
+		<result property="pointsSum" column="points_sum" />
+		<!--账户可用积分 -->
+		<result property="pointsAvailable" column="points_available" />
+		<!--身份证号码 -->
+		<result property="idNumber" column="id_number" />
+		<!--账户可用众币 -->
+		<result property="virtualCurrency" column="virtual_currency" />
+		<!--状态0无效，1正常，2锁定，3拉黑 -->
+		<result property="status" column="status" />
+		<!--车型 -->
+		<result property="carType" column="car_type" />
+		<!--车牌号码 -->
+		<result property="carNumber" column="car_number" />
+		<!--关联主账号 -->
+		<result property="mainUser" column="main_user" />
+		<!--订单总数 -->
+		<result property="orderCount" column="order_count" />
+		<!--当日订单总数 -->
+		<result property="orderCountToday" column="order_count_today" />
+		<!--是否认证（0未认证，1已认证） -->
+		<result property="isValid" column="is_valid" />
+		<!--注册时间 -->
+		<result property="registerDate" column="register_date" />
+		<!--上次活动时间 -->
+		<result property="lastLoginDate" column="last_login_date" />
+		<!--更新时间 -->
+		<result property="updateDate" column="update_date" />
+		<!--更新人 -->
+		<result property="updateBy" column="update_by" />
+		<!--0逻辑删除，1有效 -->
+		<result property="delFlag" column="del_flag" />
+		<!--行驶证号 -->
+		<result property="xhLicenseNumber" column="xh_license_number" />
+		<!--驾驶证号 -->
+		<result property="jsLicenseNumber" column="js_license_number" />
+		<!-- 登陆状态 -->
+		<result property="isLogin" column="is_login" />
+		<!--备用字段1 -->
+		<result property="bakstr1" column="bakstr1" />
+		<!--备用字段2 -->
+		<result property="bakstr2" column="bakstr2" />
+		<!--备用字段3 -->
+		<result property="bakstr3" column="bakstr3" />
+		<!--备用字段4 -->
+		<result property="bakstr4" column="bakstr4" />
+		<!--备用字段5 -->
+		<result property="bakstr5" column="bakstr5" />
+		
+		
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, phone, password,type,head_pic, name, nick_name, city, level,
+		grade,id_number, total, balance, points_sum, points_available,
+		virtual_currency, status, car_type, car_number, main_user,
+		order_count,address,private_phone,
+		order_count_today, is_valid, register_date, last_login_date, update_date, is_login,
+		update_by, del_flag,xh_license_number,js_license_number, bakstr1,
+		bakstr2, bakstr3, bakstr4,bakstr5
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="CarUserResultMap"
+		parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_car_user
+		WHERE id = #{0}
+	</select>
+	<select id="getCarUserListHistory" resultMap="CarUserResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_car_user
+		WHERE 1=1 AND del_flag = 1
+		<if test="createDate != null">
+			<![CDATA[	AND DATE_FORMAT(register_date,'%Y-%m-%d') <=  #{createDate}   ]]>
+		</if>
+		limit #{from},#{to}
+	</select>
+	<select id="getCarUserListYesterday" resultMap="CarUserResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_car_user
+		WHERE 1=1 and del_flag = 1
+		<if test="registerDate != null">
+			<![CDATA[	AND DATE_FORMAT(register_date,'%Y-%m-%d') =  #{registerDate}   ]]>
+		</if>
+	</select>
+
+
+
+
+	<!--删除：根据主键ID删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM t_car_user
+		WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.dzjt.carUser.entity.CarUser">
+		INSERT INTO t_car_user
+		(phone,password,type,head_pic,name,nick_name,city,level,grade,total,balance,points_sum,points_available,virtual_currency,status,car_type,car_number,main_user,order_count,order_count_today,is_valid,register_date,last_login_date,update_date,update_by,del_flag,xh_license_number,js_license_number,bakstr1,bakstr2,bakstr3,bakstr4,bakstr5)
+		VALUES
+		(#{phone},#{password},#{type},#{headPic},#{name},#{nickName},#{city},#{level},#{grade},#{total},#{balance},#{pointsSum},#{pointsAvailable},#{virtualCurrency},#{status},#{carType},#{carNumber},#{mainUser},#{orderCount},#{orderCountToday},#{isValid},#{registerDate},#{lastLoginDate},#{updateDate},#{updateBy},#{delFlag},#{xhLicenseNumber},#{jsLicenseNumber},#{bakstr1},#{bakstr2},#{bakstr3},#{bakstr4},#{bakstr5})
+	</insert>
+
+
+	<!-- 新增头像 -->
+	<insert id="saveczheadpic" parameterType="com.dzjt.carUser.entity.CarUser">
+		insert into t_car_user
+		(phone,head_pic)
+		values(#{0},#{1})
+	</insert>
+	<!-- 修改头像 -->
+	<update id="updateczheadpic" parameterType="com.dzjt.carUser.entity.CarUser">
+		UPDATE t_car_user
+		SET
+		head_pic = #{1}
+		WHERE id = #{2}
+	</update>
+	
+
+	<!-- 修 改 -->
+	<update id="updateByPrimaryKey" parameterType="com.dzjt.carUser.entity.CarUser">
+		UPDATE t_car_user
+		SET
+		phone = #{phone},
+		password = #{password},
+		type = #{type},
+		head_pic = #{headPic},
+		name = #{name},
+		nick_name = #{nickName},
+		city = #{city},
+		level = #{level},
+		grade = #{grade},
+		total = #{total},
+		balance = #{balance},
+		points_sum = #{pointsSum},
+		points_available = #{pointsAvailable},
+		virtual_currency = #{virtualCurrency},
+		status = #{status},
+		car_type = #{carType},
+		car_number = #{carNumber},
+		main_user = #{mainUser},
+		order_count = #{orderCount},
+		order_count_today = #{orderCountToday},
+		is_valid = #{isValid},
+		register_date = #{registerDate},
+		last_login_date = #{lastLoginDate},
+		update_date = #{updateDate},
+		update_by = #{updateBy},
+		del_flag = #{delFlag},
+		bakstr1 = #{bakstr1},
+		bakstr2 = #{bakstr2},
+		bakstr3 = #{bakstr3},
+		bakstr4 = #{bakstr4},
+		bakstr5 = #{bakstr5}
+		WHERE id = #{id}
+	</update>
+	<!-- 设置上次登录时间,登录状态 -->
+	<update id="setOtherProperties">
+		update t_car_user
+		set last_login_date = #{1},
+		is_login=#{0}
+		where id = #{3}
+	</update>
+	<update id="updateIsLoginStatus">
+		update t_car_user
+		set is_login=#{0}
+		where id = #{1}
+	</update>
+	<!-- 子账户接受邀请,设置属于哪个主账户 -->
+	<update id="updateMainCarUser">
+		update t_car_user
+		set main_user=#{1}
+		where phone = #{0}
+	</update>
+
+	<update id="updateByPhone" parameterType="com.dzjt.carUser.entity.CarUser">
+		update t_car_user
+		set
+		order_count_today=#{1},
+		order_count=#{2},
+		virtual_currency=#{3}
+		where id = #{4} 
+	</update>
+
+	<update id="updateMoneyByPhone" parameterType="com.dzjt.carUser.entity.CarUser">
+		update t_car_user
+		set
+		balance=#{1},
+		total =#{2}
+		where id = #{3}
+	</update>
+
+    <update id="updateVMchange" parameterType="com.dzjt.carUser.entity.CarUser">
+		update t_car_user
+		set
+		balance=#{1},
+		virtual_currency =#{2}
+		where id = #{0}
+	</update>
+	
+	<update id="updateAuth" parameterType="com.dzjt.carUser.entity.CarUser">
+		update t_car_user
+		set
+		is_valid=#{1}
+		where id=#{0}
+	</update>
+
+	<update id="updateCarUser2Black" parameterType="com.dzjt.carUser.entity.CarUser">
+		update t_car_user
+		set
+		bakstr1 = #{1}
+		WHERE id = #{0}
+	</update>
+	
+	<update id="updateCarUserAddPhone" >
+		update t_car_user
+		set
+		address = #{1},
+		private_phone = #{2}
+		WHERE id = #{0}
+	</update>
+</mapper>
