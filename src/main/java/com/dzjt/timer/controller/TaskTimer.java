@@ -34,7 +34,7 @@ public class TaskTimer {
     /**
      * 每日07点定时执行，上传昨日的数据
      */
-    @Scheduled(cron="0 0 12 * * ?")
+    @Scheduled(cron="0 30 0 * * ?")
     public  void initDailyTask(){
         String path = fileConfig.getBasepath();
         File file = new File(path);
