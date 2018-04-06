@@ -181,13 +181,13 @@
 	</sql>
 
 	<select id="getMovefieldOrderListYesterday" resultMap="MovefieldOrderResultMap">
-		select * from m_movefield_order where 1=1 AND del_flag = 1
+		select * from m_movefield_order where 1=1 AND del_flag = 1 and status = 12
 		<if test="createTime != null">
 			<![CDATA[	AND DATE_FORMAT(create_time,'%Y-%m-%d') =  #{createTime}   ]]>
 		</if>
 	</select>
 	<select id="getMovefieldOrderListHistory" resultMap="MovefieldOrderResultMap">
-		select * from m_movefield_order where 1=1 AND del_flag = 1
+		select * from m_movefield_order where 1=1 AND del_flag = 1 and status = 12
 		<if test="createDate != null">
 			<![CDATA[	AND DATE_FORMAT(create_time,'%Y-%m-%d') <=  #{createDate}   ]]>
 		</if>

@@ -149,7 +149,7 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_order
-		WHERE 1=1 AND del_flag = 1
+		WHERE 1=1 AND del_flag = 1  and status = 2
 		<if test="createDate != null">
 			<![CDATA[	AND DATE_FORMAT(call_date,'%Y-%m-%d') <=  #{createDate}   ]]>
 		</if>
@@ -159,7 +159,7 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_order
-		WHERE 1=1 and del_flag = 1
+		WHERE 1=1 and del_flag = 1 and status = 2
 		<if test="callDate != null">
 			<![CDATA[	AND DATE_FORMAT(call_date,'%Y-%m-%d') =  #{callDate}   ]]>
 		</if>
