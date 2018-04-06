@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: admin
-    url: jdbc:mysql://localhost:3306/dzwl_test
+    username: dbuser
+    password: dbuser123!@#
+    url: jdbc:mysql://dzwldb-report.cn7vi1cu7cbm.rds.cn-north-1.amazonaws.com.cn:3306/dzwldb?useUnicode=true&amp;characterEncoding=utf-8
   freemarker:
     suffix: .html
     cache: false
@@ -53,7 +53,7 @@ thymeleaf:
 dzjt:
     file:
       dzyx:
-        basepath: D:/dzjt/
+        basepath: /tomcat/dzjt
         markfile: /home/shared_disk/dzjt/datacollection/dzcx/mark.md
         filesize: 10000
         key: a6$Cmqagz#P!K^p3QpcG*21DQTc3jtc@
@@ -63,4 +63,4 @@ dzjt:
         username: root
         password:
         privatekey: classpath:dzjt_ftp_server_key
-        port: 60218
+        port: 60219
