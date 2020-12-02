@@ -36,9 +36,9 @@ logging:
 #文件上传配置
 resource:
   #上传的文件存储路径
-  file-path: /Users/liusy/develop/log/
+  file-path: /Users/xx/develop/log/
   #图片显示URL 再加 文件名
-  file-url: http://localhost:8080/esb-admin/disk/
+  file-url: http://localhost:8080/xx/disk/
   #图片上传数量
   image-count: 5
 mybatis:
@@ -53,7 +53,7 @@ thymeleaf:
 dzjt:
     file:
       dzyx:
-        basepath: /tomcat/dzjt
+        basepath: /tomcat7/dzjt
         markfile: /home/shared_disk/dzjt/datacollection/dzcx/mark.md
         filesize: 10000
         key: a6$Cmqagz#P!K^p3QpcG*21DQTc3jtc@

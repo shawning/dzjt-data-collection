@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_HOME" value="d:/dzjt"/>
+    <property name="LOG_HOME" value="/tomcat7/"/>
     <!--<property name="LOG_HOME" value="/home/vi018317"/>-->
     <!-- 控制台输出 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
